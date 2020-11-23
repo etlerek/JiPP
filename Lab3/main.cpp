@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     //////UWAGA! aby plik zapisał się prawidłowo należy podać swoją nazwę użytkownika w ścieżce poniżej, lub //////
     //////       jeżeli chcemy żeby plik nie zapisywał się na pulpicie to podać własną ścieżkę               //////
 
-    #define sciezka "C:\\Users\\theet\\Desktop\\Lab3\\"
+    #define sciezka "C:\\Users\\**tutaj prosze podac nazwe uzytkownika**\\Desktop\\Lab3\\"
     
     //////zapis do pliku///////
     test.store("macierz.txt", sciezka );

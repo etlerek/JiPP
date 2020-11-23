@@ -48,68 +48,77 @@ Matrix::Matrix(int k)
 
 void Matrix::set(int m, int n, double val)
 {
-    macierz[m - 1][n - 1] = val;
+    if(m < K || n < W)
+        macierz[m - 1][n - 1] = val;
 }
 
 double Matrix::get(int m, int n)
 {
-    return macierz[m - 1][n - 1];
+    if(m > K || n > W)
+    {
+        cout << "get error: Macierz jest za mala:";
+        return 0;
+    }
+    else
+
+        return macierz[m - 1][n - 1];
 }
 
 Matrix Matrix::add(Matrix m2)
 {
+    Matrix suma(K,W);
+
     if (K == m2.K && W == m2.W)
-    {
-        Matrix suma(K,W);
-        for (int i = 0; i < K; i++)
+    {     
+        for (int i = 0; i < W; i++)
         {
-            for (int j = 0; j < W; j++)
+            for (int j = 0; j < K; j++)
             {
                 suma.macierz[i][j] = macierz[i][j] + m2.macierz[i][j];
             }
         }
-
         return suma;
     }
+
     else
     {
         cout << "Nie da sie dodac tych macierzy\n";
-        exit(0);
+        return 0;
     }
 }
 
 Matrix Matrix::subtract(Matrix m2)
 {
-    if (K == m2.K && W == m2.W)
-    {
-        Matrix suma(K, W);
+    Matrix roznica(K, W);
 
-        for (int i = 0; i < K; i++)
+    if (K == m2.K && W == m2.W)
+    {       
+        for (int i = 0; i < W; i++)
         {
-            for (int j = 0; j < W; j++)
+            for (int j = 0; j < K; j++)
             {
-                suma.macierz[i][j] = macierz[i][j] - m2.macierz[i][j];
+                roznica.macierz[i][j] = macierz[i][j] - m2.macierz[i][j];
             }
         }
 
-        return suma;
+        return roznica;
     }
     else
     {
         cout << "Nie da sie odjac tych macierzy\n";
-        exit(0);
+        return 0;
     }
 }
 
 Matrix Matrix::multiply(Matrix m2)
 {
-    if (K == m2.W)
-    {
-        Matrix iloczyn(K, W);
+    Matrix iloczyn(K, W);
 
-        for (int i = 0; i < K; i++)
+    if (K == m2.W)
+    {      
+        for (int i = 0; i < W; i++)
         {
-            for (int j = 0; j < W; j++)
+            for (int j = 0; j < m2.K; j++)
             {
                 for (int k = 0; k < K; k++)
                 {
@@ -118,8 +127,12 @@ Matrix Matrix::multiply(Matrix m2)
             }
         }
         return iloczyn;
+    }   
+    else
+    {
+        return 0;
     }
-    exit(0);
+    
 }
 
 int Matrix::cols()
@@ -151,25 +164,26 @@ void Matrix::store(string filename, string path)
 
     if (plik.good())
     {
-        plik << " Kolumny: " << K;
-        plik << " Wiersze: " << W;
-
-        for (int i = 0; i < K; i++)
+        plik << " Kolumny: " << K << endl;
+        plik << " Wiersze: " << W << endl;
+        plik << " Macierz: " << endl;
+        for (int i = 0; i < W; i++)
         {
-            for (int j = 0; j < W; j++)
+            for (int j = 0; j < K; j++)
             {
-                plik << " Macierz:" << endl << macierz[i][j] << " ";
+                plik << macierz[i][j] << " ";
             }
-            cout << endl;
+            plik << endl;    
         }
         plik.close();
+        cout << "\nZapis do pliku powiodl sie\n";
     }
     else
     {
         cout << "Error nie udalo sie otworzyc pliku";
     }   
 }
-/*
+
 Matrix::Matrix(string path)
 {
     fstream plik;
@@ -177,31 +191,22 @@ Matrix::Matrix(string path)
 
     if(plik.good())
     {
+        plik >> W;
+        plik >> K;
 
+        macierz = new double *[W];
+        for (int i = 0; i < W; i++)
+        {
+            macierz[i] = new double[K];
+
+            for (int j = 0; j < K; j++)
+            {
+                plik >> Matrix::macierz[i][j];
+            }
+        }
     }
     else
     {
         cout << "Error nie udalo sie otworzyc pliku";
     }
 }
-
-else
-    {
-        K = k;
-        W = w;
-        macierz = new double* [k];
-        for(int i = 0; i < k; i++)
-        {
-            macierz[i] = new double [w];
-        }
-
-        for(int i = 0; i < k; i++)
-        {
-            for(int j = 0; j < w; j++)
-            {
-                macierz[i][j] = 0; 
-            }
-        }
-        
-    }
-*/

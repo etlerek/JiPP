@@ -48,7 +48,7 @@ Matrix::Matrix(int k)
 
 void Matrix::set(int m, int n, double val)
 {
-    if(m < K || n < W)
+    if(m <= K || n <= W)
         macierz[m - 1][n - 1] = val;
 }
 

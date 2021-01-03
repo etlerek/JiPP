@@ -4,6 +4,7 @@
 #include <list>
 #include <algorithm>
 #include <map>
+#include <conio.h>
 
 using namespace std;
 int i = 0;
@@ -153,5 +154,6 @@ main()
     cout << "\n";
     dane.printSalaries();
     dane.printSalariesSorted();
+    getch();
     return 0;
 }
